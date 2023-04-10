@@ -1,6 +1,6 @@
 FROM python:3.9-slim-buster
 
-WORKDIR /Users/suraaj/Desktop/dsml_minions/docker_for_minions
+WORKDIR D:\BackUp2022\OneDrive\MySapBK2023\Advance Analytics\code\MLOps\AWS\GitHub\DSML_Minions_CICD
 
 COPY requirements.txt ./
 RUN python3 -m pip install --upgrade pip
