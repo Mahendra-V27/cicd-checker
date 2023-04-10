@@ -1,6 +1,6 @@
 {
   "ipcMode": null,
-  "executionRoleArn": "arn:aws:iam::855645385220:role/ecsTaskExecutionRole",
+  "executionRoleArn": "arn:aws:iam::372307897440:role/ecsTaskExecutionRole",
   "containerDefinitions": [
     {
       "dnsSearchDomains": null,
@@ -9,7 +9,7 @@
         "logDriver": "awslogs",
         "secretOptions": null,
         "options": {
-          "awslogs-group": "/ecs/loan-app-task",
+          "awslogs-group": "/ecs/flask_app",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "ecs"
         }
@@ -37,7 +37,7 @@
       "memoryReservation": null,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "855645385220.dkr.ecr.us-east-1.amazonaws.com/loan_flask_app:latest",
+      "image": "372307897440.dkr.ecr.us-east-1.amazonaws.com/flask_app:latest",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
@@ -54,7 +54,7 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "loan-app-container"
+      "name": "flask_app"
     }
   ],
   "placementConstraints": [],
@@ -64,8 +64,8 @@
     "EC2",
     "FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:us-east-1:855645385220:task-definition/loan-app-task:1",
-  "family": "loan-app-task",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:372307897440:task-definition/flask_app:1",
+  "family": "flask_app",
   "requiresAttributes": [
     {
       "targetId": null,
@@ -115,10 +115,7 @@
     "FARGATE"
   ],
   "networkMode": "awsvpc",
-  "runtimePlatform": {
-    "operatingSystemFamily": "LINUX",
-    "cpuArchitecture": null
-  },
+  "runtimePlatform": null,
   "cpu": "512",
   "revision": 1,
   "status": "ACTIVE",
