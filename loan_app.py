@@ -11,7 +11,7 @@ clf = pickle.load(model)
 
 @app.route("/ping")
 def hello_world():
-    return { 'Pinging the model successful' : 'Hurray!!'  }
+    return { 'Pinging the model successful' : 'Hurray!! :) '  }
 
 @app.route("/predict", methods=["Post"] )
 def prediction ():
