@@ -1,3 +1,5 @@
+name: Deploy to ECS
+
 on:
   push:
     branches:
@@ -5,12 +7,12 @@ on:
 
 env:
   AWS_REGION: us-east-1                   # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: flask_app           # set this to your Amazon ECR repository name
-  ECS_SERVICE: flask_service_7               # set this to your Amazon ECS service name
-  ECS_CLUSTER:  default                  # set this to your Amazon ECS cluster name
+  ECR_REPOSITORY: loan_app_image           # set this to your Amazon ECR repository name
+  ECS_SERVICE: loan-app-service               # set this to your Amazon ECS service name
+  ECS_CLUSTER:  loan-app-cluster                  # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: task-definition.json # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: flask_app           # set this to the name of the container in the
+  CONTAINER_NAME: loan-app-container           # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
 
 
@@ -29,7 +31,7 @@ jobs:
           pip install pytest
           pip install -r requirements.txt
       - name: Run tests with pytest
-        run: pytest 
+        run: pytest
 
 
 
@@ -43,7 +45,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@13d241b293754004c80624b5567555c4a39ffbe3
+        uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -51,7 +53,7 @@ jobs:
 
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@aaf69d68aa3fb14c1d5a6be9ac61fe15b48453a2
+        uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
@@ -68,14 +70,14 @@ jobs:
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@97587c9d45a4930bf0e3da8dd2feb2a463cf4a3a
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: ${{ env.ECS_TASK_DEFINITION }}
           container-name: ${{ env.CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@de0132cf8cdedb79975c6d42b77eb7ea193cf28e
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: ${{ env.ECS_SERVICE }}
